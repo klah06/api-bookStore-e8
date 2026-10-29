@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/klah06/api-bookStore-e8/issues"
   },
-  "homepage": "https://github.com/klah06/api-bookStore-e8#readme"
+  "homepage": "https://github.com/klah06/api-bookStore-e8#readme",
+  "dependencies": {
+    "express": "^5.3.0",
+    "nodemon": "^3.1.14"
+  }
 }
