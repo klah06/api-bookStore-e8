@@ -22,7 +22,8 @@ const livros: Livro[] = [
         ano_pub: 2025,
         classificacao: 18,
         num_paginas: 364,
-        sinopse:
+        sinopse: "Na superfície, Scarlett e Lukas têm pouco em comum. No entanto, após um segredo vir à tona e uma dinâmica inesperada envolvendo seus círculos de relacionamento, eles fazem um acordo temporário: um romance casual e secreto para aliviar a alta pressão e o estresse dos treinos pré-Olimpíadas"
+        
     },
 
     {
@@ -32,8 +33,7 @@ const livros: Livro[] = [
         ano_pub: 2026,
         classificacao: 18,
         num_paginas: 352,
-        sinopse:
-        
+        sinopse:"A história acompanha uma jovem decidida a buscar vingança após sua família (sua irmã) ser gravemente ferida por membros de uma poderosa sociedade secreta chamada Vencor. Sem conseguir rastrear diretamente os chefes por trás da tragédia, sua única pista é o Vipers, um time de hóquei universitário de elite que domina tanto o gelo quanto as sombras da cidade. Para se infiltrar nesse círculo perigoso, ela decide se aproximar do capitão do time, Kane Davenport. No entanto, o que parecia ser apenas uma estratégia de retaliação e espionagem se transforma em uma armadilha: a fachada simpática e carismática de Kane esconde um anti-herói predador, frio e obsessivo, arrastando os dois para um jogo letal e de atração mútua do qual ela não consegue mais escapar."
     }
 
     {
@@ -43,7 +43,7 @@ const livros: Livro[] = [
         ano_pub: 2024,
         classificacao: 18,
         num_paginas: 352,
-        sinopse:
+        sinopse: "Bo e Win se conhecem em uma festa de halloween e após sentir uma forte atração, passam uma noite inesquecível, mas algumas semanas depois, descobrem que vão ter um filho."
         
     }
 
@@ -54,7 +54,17 @@ const livros: Livro[] = [
         ano_pub: 2026,
         classificacao: 18,
         num_paginas: 288,
-        sinopse:
+        sinopse: "dark militar que acompanha Cameron Mortem (um soldado letal e instável, viciado em matar seus parceiros de campo por conta de uma droga experimental) e Emery Maves (uma jovem que escapa por pouco de uma sentença de morte e é forçada a ser a nova dupla dele)"
+    }
+
+    {
+        id: 5,
+        title: "O risco",
+        author: "S. T.Abby",
+        ano_pub: 2026,
+        classificacao: 18,
+        num_paginas: 184,
+        sinopse: "Lana Myers perdeu tudo, e agora só lhe resta ir em busca daqueles que destruíram sua vida e sua família. Depois de anos planejando, decide levar adiante sua vingança. Porém, um encontro inesperado com Logan Bennett, um agente do FBI especializado em serial killers, pode arruinar tudo. Talentoso e dedicado, Logan sempre foi ótimo em decifrar as pessoas, mas Lana é um mistério irresistível."
     }
 ]
 
@@ -76,7 +86,7 @@ app.get("/livros", (req: Request, res: Response) => {
 
 //REQUISIÇÃO POST (CADASTRAR NOVO LIVRO)
 app.post("/livros", (req: Request, res: Response) => {
-    const { id, title, author, ano_pub } = req.body;
+    const { id, title, author, ano_pub, classificacao, num_paginas, sinopse } = req.body;
 
     const novoLivro: Livro = {
         id: Number(id),
@@ -97,16 +107,25 @@ app.post("/livros", (req: Request, res: Response) => {
 });
 
 //REQUISIÇÃO PUT (ATUALIZAR DADOS)
-app.put("/livros/:id", (req, res) => {
-    const index = buscaLivro(req.params.id);
+app.put("/livros/:id", (req: Request, res: Response) => {
+    const index = buscaLivro(String(req.params.id));
+{
+    if(index === -1){
+        res.status(404).json({mensagem: "Livro não encontrado!"});
+        return;
+    }
 
-    const { title, author, ano_pub } = req.body;
+    const { title, author, ano_pub, classificacao, num_paginas, sinopse } = req.body;
 
     livros[index] = {
-        ...livros[index],
+
+        ...livros[index]!,
         title,
         author,
-        ano_pub
+        ano_pub: Number(ano_pub),
+        classificacao,
+        num_paginas,
+        sinopse
     };
 
     res.status(200).json({
@@ -115,4 +134,20 @@ app.put("/livros/:id", (req, res) => {
     });
 });
 
+app.delete("/livros/:id", (req:Request, res: Response) => {
+    const index = buscaLivro(String(req.params.id));
+
+    if (index === -1){
+        res.status(404).json({mensagem: "Livros não encontrado!" });
+    }
+
+  //Remove o Livro do array base (livros) com base no índice (id)
+    livros.slice(index,1);
+
+    res.status(200).json({
+    mensagem: "Livro removido com sucesso",
+});
+})
+
 export default app;
+
