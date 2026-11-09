@@ -144,6 +144,43 @@ app.put("/livros/:id", (req: Request, res: Response) => {
     });
 });
 
+// REQUISIÇÃO PATCH - ATUALIZAÇÃO PARCIAL DO LIVRS
+app.patch("/livros/:id", (req: Request, res: Response) => {
+    const index = buscaLivro(String(req.params.id));
+
+    if (index === -1) {
+        res.status(404).json({
+            mensagem: "Livro não encontrado!"
+        });
+        return;
+    }
+
+    const {
+        title,
+        author,
+        ano_pub,
+        classificacao,
+        num_paginas,
+        sinopse,
+    } = req.body;
+
+
+    livros[index] = {
+        ...livros[index]!,
+        ...(title !== undefined && {title}),
+        ...(author !== undefined && {author}),
+        ...(ano_pub !== undefined && {ano_pub: Number(ano_pub)}),
+        ...(classificacao !== undefined && {classificacao: Number(classificacao)}),
+        ...(num_paginas !== undefined && {num_paginas: Number(num_paginas)}),
+        ...(sinopse !== undefined && {sinopse})
+    };
+
+    res.status(200).json({
+        mensagem: "Livro atualizado parcialmente com sucesso!",
+        livro: livros[index]
+    });
+});
+
 // REQUISIÇÃO DELETE - EXCLUIR LIVRO
 app.delete("/livros/:id", (req: Request, res: Response) => {
     const index = buscaLivro(String(req.params.id));
