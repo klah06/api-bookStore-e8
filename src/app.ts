@@ -10,6 +10,7 @@ export interface Livro {
     classificacao: number;
     num_paginas: number;
     sinopse: string;
+    genero: string;
 }
 
 const app = express();
@@ -23,6 +24,7 @@ const livros: Livro[] = [
         ano_pub: 2025,
         classificacao: 18,
         num_paginas: 364,
+        genero: "Romance",
         sinopse: "Na superfície, Scarlett e Lukas têm pouco em comum. No entanto, após um segredo vir à tona e uma dinâmica inesperada envolvendo seus círculos de relacionamento, eles fazem um acordo temporário: um romance casual e secreto para aliviar a alta pressão e o estresse dos treinos pré-Olimpíadas."
     },
     {
@@ -32,6 +34,7 @@ const livros: Livro[] = [
         ano_pub: 2026,
         classificacao: 18,
         num_paginas: 352,
+        genero: "Romance",
         sinopse: "A história acompanha uma jovem decidida a buscar vingança após sua família (sua irmã) ser gravemente ferida por membros de uma poderosa sociedade secreta chamada Vencor. Sem conseguir rastrear diretamente os chefes por trás da tragédia, sua única pista é o Vipers, um time de hóquei universitário de elite que domina tanto o gelo quanto as sombras da cidade. Para se infiltrar nesse círculo perigoso, ela decide se aproximar do capitão do time, Kane Davenport. No entanto, o que parecia ser apenas uma estratégia de retaliação e espionagem se transforma em uma armadilha: a fachada simpática e carismática de Kane esconde um anti-herói predador, frio e obsessivo, arrastando os dois para um jogo letal e de atração mútua do qual ela não consegue mais escapar."
     },
     {
@@ -41,6 +44,7 @@ const livros: Livro[] = [
         ano_pub: 2024,
         classificacao: 18,
         num_paginas: 352,
+        genero: "Romance",
         sinopse: "Bo e Win se conhecem em uma festa de halloween e após sentir uma forte atração, passam uma noite inesquecível, mas algumas semanas depois, descobrem que vão ter um filho."
     },
     {
@@ -50,6 +54,7 @@ const livros: Livro[] = [
         ano_pub: 2026,
         classificacao: 18,
         num_paginas: 288,
+        genero: "Romance",
         sinopse: "Dark militar que acompanha Cameron Mortem (um soldado letal e instável, viciado em matar seus parceiros de campo por conta de uma droga experimental) e Emery Maves (uma jovem que escapa por pouco de uma sentença de morte e é forçada a ser a nova dupla dele)."
     },
     {
@@ -59,6 +64,7 @@ const livros: Livro[] = [
         ano_pub: 2026,
         classificacao: 18,
         num_paginas: 184,
+        genero: "Romance",
         sinopse: "Lana Myers perdeu tudo, e agora só lhe resta ir em busca daqueles que destruíram sua vida e sua família. Depois de anos planejando, decide levar adiante sua vingança. Porém, um encontro inesperado com Logan Bennett, um agente do FBI especializado em serial killers, pode arruinar tudo. Talentoso e dedicado, Logan sempre foi ótimo em decifrar as pessoas, mas Lana é um mistério irresistível."
     }
 ];
@@ -87,7 +93,8 @@ app.post("/livros", (req: Request, res: Response) => {
         ano_pub,
         classificacao,
         num_paginas,
-        sinopse
+        sinopse,
+        genero
     } = req.body;
 
     const novoLivro: Livro = {
@@ -97,7 +104,8 @@ app.post("/livros", (req: Request, res: Response) => {
         ano_pub: Number(ano_pub),
         classificacao: Number(classificacao),
         num_paginas: Number(num_paginas),
-        sinopse
+        sinopse,
+        genero
     };
 
     livros.push(novoLivro);
@@ -125,7 +133,8 @@ app.put("/livros/:id", (req: Request, res: Response) => {
         ano_pub,
         classificacao,
         num_paginas,
-        sinopse
+        sinopse,
+        genero
     } = req.body;
 
     livros[index] = {
@@ -135,7 +144,8 @@ app.put("/livros/:id", (req: Request, res: Response) => {
         ano_pub: Number(ano_pub),
         classificacao: Number(classificacao),
         num_paginas: Number(num_paginas),
-        sinopse
+        sinopse,
+        genero
     };
 
     res.status(200).json({
@@ -162,6 +172,7 @@ app.patch("/livros/:id", (req: Request, res: Response) => {
         classificacao,
         num_paginas,
         sinopse,
+        genero
     } = req.body;
 
 
@@ -172,7 +183,8 @@ app.patch("/livros/:id", (req: Request, res: Response) => {
         ...(ano_pub !== undefined && {ano_pub: Number(ano_pub)}),
         ...(classificacao !== undefined && {classificacao: Number(classificacao)}),
         ...(num_paginas !== undefined && {num_paginas: Number(num_paginas)}),
-        ...(sinopse !== undefined && {sinopse})
+        ...(sinopse !== undefined && {sinopse}),
+        ...(genero !== undefined && {genero})
     };
 
     res.status(200).json({
