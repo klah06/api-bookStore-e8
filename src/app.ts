@@ -112,37 +112,38 @@ app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) 
     }
 });
 
-// REQUISIÇÃO PUT - ATUALIZAR LIVRO
-app.put("/livros/:id", (req: Request, res: Response) => {
-    const index = buscaLivro(String(req.params.id));
+//REQUISIÇÃO PUT (ATUALIZAR DADOS)
+app.put("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, res: Response) => {
+    try {
+        const { id } = req.params;
 
-    if (index === -1) {
-        res.status(404).json({
-            mensagem: "Livro não encontrado!"
+        const { title, author, ano_pub, classificacao, num_paginas, sinopse, genero } = req.body;
+
+        const livroAtualizado = await Livro.findByIdAndUpdate(
+            id,
+            {
+                title,
+                author,
+                ano_pub: Number(ano_pub),
+                classificacao,
+                num_paginas: Number(num_paginas),
+                sinopse,
+                genero
+            },
+            { new: true }
+        );
+
+        res.status(200).json({
+            mensagem: "Livro atualizado com sucesso!",
+            livro: livroAtualizado
         });
-        return;
+
+    } catch (error) {
+        res.status(500).json({
+            mensagem: "Erro ao atualizar livro."
+        });
     }
-
-    const {
-        title,
-        author,
-        ano_pub,
-        classificacao,
-        num_paginas,
-        sinopse,
-        genero
-    } = req.body;
-
-    livros[index] = {
-        ...livros[index]!,
-        title,
-        author,
-        ano_pub: Number(ano_pub),
-        classificacao: Number(classificacao),
-        num_paginas: Number(num_paginas),
-        sinopse,
-        genero
-    };
+});
 
     res.status(200).json({
         mensagem: "Livro atualizado com sucesso!",
