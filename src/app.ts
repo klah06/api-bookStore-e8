@@ -1,7 +1,7 @@
 
 import express from "express";
 import type { Request, Response } from "express";
-import Livro from "../models/Livro.js";
+import Livro, { type InterfaceLivro } from "../models/Livro.js";
 
 //export interface Livro {
 //    id: number;
@@ -88,35 +88,28 @@ app.get("/livros", (req: Request, res: Response) => {
 });
 
 // REQUISIÇÃO POST - CADASTRAR NOVO LIVRO
-app.post("/livros", (req: Request, res: Response) => {
-    const {
-        id,
-        title,
-        author,
-        ano_pub,
-        classificacao,
-        num_paginas,
-        sinopse,
-        genero
-    } = req.body;
+app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) => {
+    try {
+        const { title, author, ano_pub, classificacao, num_paginas, sinopse, genero } = req.body;
 
-    const novoLivro: Livro = {
-        id: Number(id),
-        title,
-        author,
-        ano_pub: Number(ano_pub),
-        classificacao: Number(classificacao),
-        num_paginas: Number(num_paginas),
-        sinopse,
-        genero
-    };
+        const novoLivro = await Livro.create({
+            title,
+            author,
+            ano_pub: Number(ano_pub),
+            classificacao: Number(classificacao),
+            num_paginas: Number(num_paginas),
+            sinopse,
+            genero
+        });
 
-    livros.push(novoLivro);
+        res.status(201).json({
+            mensagem: "Livro cadastrado com sucesso!",
+            livro: novoLivro
+        });
 
-    res.status(201).json({
-        mensagem: "Livro cadastrado com sucesso!",
-        livro: novoLivro
-    });
+    } catch (error) {
+        res.status(500).json({ mensagem: "Erro ao cadastrar livro." });
+    }
 });
 
 // REQUISIÇÃO PUT - ATUALIZAR LIVRO
