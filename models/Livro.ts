@@ -4,13 +4,15 @@ import mongoose, { Schema, type InferSchemaType } from "mongoose";
 
 const livroSchema = new Schema (
     {
-        title: { type: String, required: true},
-        author: { type: String, required: true},
-        ano_pub: { type: Number, required: true},
-        classificacao: { type: Number, required: true},
-        num_paginas: { type: Number, required: true},
-        sinopse: { type: String, required: true},
-        genero: { type: String, required: true}
+        title: { type: String, required: true },
+        author: { type: String, required: true },
+        ano_pub: { type: Number, required: true },
+        classificacao: { type: Number, required: true },
+        num_paginas: { type: Number, required: true },
+        estoque: { type: Number, required: true },
+        genero: { type: String, required: true },
+        preco: { type: Number, required: true },
+        sku: { type: String, required: false }
     },
     { versionKey: false }
 );
