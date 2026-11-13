@@ -36,7 +36,7 @@ app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) 
             estoque: Number(estoque),
             genero,
             preco: Number(preco),
-            sku
+            sku,
         });
 
         res.status(201).json({
@@ -71,6 +71,11 @@ app.put("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, re
             },
             { new: true }
         );
+
+        if(!livroAtualizado){
+            res.status(404).json({mensagem: "Livro não encontrado!"});
+            return;
+        }
 
         res.status(200).json({
             mensagem: "Livro atualizado com sucesso!",
