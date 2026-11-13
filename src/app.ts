@@ -115,22 +115,27 @@ app.patch("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, 
     });
 
 // REQUISIÇÃO DELETE - EXCLUIR LIVRO
-app.delete("/livros/:id", (req: Request, res: Response) => {
-    const index = buscaLivro(String(req.params.id));
+app.delete("/livros/:id", async (req: Request<{id: string}>, res: Response) => {
+    try{
+    const { id } = req.params;
 
-    if (index === -1) {
+    const livroDeletado = await Livro.findByIdAndDelete(id);
+
+    if (!livroDeletado) {
         res.status(404).json({
             mensagem: "Livro não encontrado!"
-        });
+    });
         return;
     }
 
-    // Remove o livro do array com base no índice
-    livros.splice(index, 1);
 
     res.status(200).json({
         mensagem: "Livro removido com sucesso!"
-    });
+});
+}catch(error){
+    res.status(500).json({mensagem: "Erro ao remover livros"});
+}
+
 });
 
 export default app;
