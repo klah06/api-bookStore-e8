@@ -17,72 +17,17 @@ app.get("/livros", (req: Request, res: Response) => {
 });
 
 // REQUISIÇÃO POST - CADASTRAR NOVO LIVRO
-app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) => 
-    
+app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) =>{
 
+});
 //REQUISIÇÃO PUT (ATUALIZAR DADOS)
 app.put("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, res: Response) => {
-    try {
-        const { id } = req.params;
-
-        const { title, author, ano_pub, classificacao, num_paginas, estoque, genero, preco, sku } = req.body;
-
-        const livroAtualizado = await Livro.findByIdAndUpdate(
-            id,
-            {
-                title,
-            author,
-            ano_pub: Number(ano_pub),
-            classificacao: Number(classificacao),
-            num_paginas: Number(num_paginas),
-            estoque,
-            genero,
-            preco: Number(preco),
-            sku
-            },
-            { new: true }
-        );
-
-        if(!livroAtualizado){
-            res.status(404).json({mensagem: "Livro não encontrado!"});
-            return;
-        }
-
-        res.status(200).json({
-            mensagem: "Livro atualizado com sucesso!",
-            livro: livroAtualizado
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            mensagem: "Erro ao atualizar livro."
-        });
-    }
+    
 });
 
 // REQUISIÇÃO PATCH - ATUALIZAÇÃO PARCIAL DO LIVRS
 app.patch("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, res: Response) => {
-    try{
-        const { id } = req.params;
-
-        const livroAtualizado = await Livro.findByIdAndUpdate(
-        id,
-        { $set: req.body },
-        { returnDocument: 'after' }
-        );
-
-        if(!livroAtualizado){
-                res.status(404).json({mensagem: "Livro não encontrado!"});
-                return;
-            }
-
-        res.status(200).json({
-            mensagem: "Livro atualizado parcialmente com sucesso!",
-            livro: livroAtualizado
-        });
-    }catch(error){
-        res.status(500).json({mensagem: "Erro ao atualizar pacialmente o livro"})
-    }
+    
     });
 
 // REQUISIÇÃO DELETE - EXCLUIR LIVRO
