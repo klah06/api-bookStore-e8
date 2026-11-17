@@ -16,7 +16,7 @@ class LivroController{
 //POST - CADASTRAR LIVRO NOVO
 static async cadastrar (req: Request, res: Response) {
     try {
-        const { title, author, ano_pub, classificacao, num_paginas, estoque, genero, preco, sku } = req.body;
+        const { title, author, ano_pub, classificacao, num_paginas, estoque, genero, preco, sku, cover} = req.body;
 
         const novoLivro = await Livro.create({
             title,
@@ -28,6 +28,7 @@ static async cadastrar (req: Request, res: Response) {
             genero,
             preco: Number(preco),
             sku,
+            cover
         });
 
         res.status(201).json({
@@ -45,7 +46,7 @@ static async atualizar (req: Request, res: Response) {
     try {
         const { id } = req.params;
 
-        const { title, author, ano_pub, classificacao, num_paginas, estoque, genero, preco, sku } = req.body;
+        const { title, author, ano_pub, classificacao, num_paginas, estoque, genero, preco, sku, cover } = req.body;
 
         const livroAtualizado = await Livro.findByIdAndUpdate(
             id,
@@ -58,7 +59,8 @@ static async atualizar (req: Request, res: Response) {
             estoque,
             genero,
             preco: Number(preco),
-            sku
+            sku,
+            cover
             },
             { new: true }
         );

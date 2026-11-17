@@ -12,7 +12,8 @@ const livroSchema = new Schema (
         estoque: { type: Number, required: true },
         genero: { type: String, required: true },
         preco: { type: Number, required: true },
-        sku: { type: String, required: false }
+        sku: { type: String, required: false },
+        cover: {type: String, default: "https://placehold.co/300x450?texto=No+Cover"},
     },
     { versionKey: false }
 );
