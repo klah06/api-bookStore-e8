@@ -1,39 +1,21 @@
 
 import express from "express";
 import type { Request, Response } from "express";
-import Livro, { type InterfaceLivro } from "../models/Livro.js"
+import livroRoutes from "./routes/livroRoutes.js";
+
 const app = express();
 app.use(express.json());
 
-// REQUISIÇÃO GET - ROTA INICIAL
+//MIDDLEWARE
+app.use(express.json());
+app.set("json spaces", 2)
+
+// ROTA BASE
 app.get("/", (req: Request, res: Response) => {
-    res.status(200).send("Codificação BackEnd");
+    res.status(200).send("BookStore - Smart Library");
 });
 
-// REQUISIÇÃO GET - LISTAR LIVROS
-app.get("/livros", (req: Request, res: Response) => {
-    
-    
-});
-
-// REQUISIÇÃO POST - CADASTRAR NOVO LIVRO
-app.post("/livros", async (req: Request<{}, {}, InterfaceLivro>, res: Response) =>{
-
-});
-//REQUISIÇÃO PUT (ATUALIZAR DADOS)
-app.put("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, res: Response) => {
-    
-});
-
-// REQUISIÇÃO PATCH - ATUALIZAÇÃO PARCIAL DO LIVRS
-app.patch("/livros/:id", async (req: Request<{id: string}, {}, InterfaceLivro>, res: Response) => {
-    
-    });
-
-// REQUISIÇÃO DELETE - EXCLUIR LIVRO
-app.delete("/livros/:id", async (req: Request<{id: string}>, res: Response) => {
-    
-
-});
+//REGISTRAR AS ROTAS DE "LIVROS" NA APLICAÇÃO
+app.use(livroRoutes);
 
 export default app;

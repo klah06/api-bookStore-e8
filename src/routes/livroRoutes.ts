@@ -13,3 +13,5 @@ router.post("/livros", LivroController.cadastrar);
 router.put("/livros/:id", LivroController.atualizar);
 router.patch("/livros/:id", LivroController.atualizarParcial);
 router.delete("/livros/:id", LivroController.deletar);
+
+export default router
