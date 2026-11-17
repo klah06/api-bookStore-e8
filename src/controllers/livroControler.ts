@@ -30,6 +30,28 @@ class LivroController{
         }
     }
 
+    //GET - FILTRAR LIVROS POR CRITERIOS OPCIONAIS - REQ QUERY
+    static async buscarPorFiltro (req: Request, res: Response)
+    try{
+        //Extrair os possíveis filtros enviados após o "?" na URL
+        const {  genero, titulo, autor } = req.query;
+
+        //Criar um objeto vazio para receber apenas os filtros preenchidos
+        const filtro: Record<string, any> = {};
+
+        if(autor){
+            //$regex: busca parcial ("Machado", encontra "Machado Assis...")
+            filtro.author = { $regex: String(autor), $options:"i"}
+
+            if(titulo){
+            filtro.title = { $regex: String(titulo), $options:"i"}
+
+            if(genero){
+            filtro.genero = { $regex: String(genero), $options:"i"}
+        }
+    }catch{
+
+    }
 //POST - CADASTRAR LIVRO NOVO
 static async cadastrar (req: Request, res: Response) {
     try {
