@@ -15,7 +15,7 @@ app.get("/", (req: Request, res: Response) => {
     res.status(200).send("BookStore - Smart Library");
 });
 
-//REGISTRAR AS ROTAS DE "LIVROS" NA APLICAÇÃO
+//REGISTRAR AS ROTAS DE "LIVROS" NA APLICAÇÃO.
 app.use(livroRoutes);
 
 export default app;
