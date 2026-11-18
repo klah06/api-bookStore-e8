@@ -1,6 +1,6 @@
     import "dotenv/config";
     import app from "./src/app.js";
-    import conectaNaDatabase from "./config/dbConnect.js";
+    import conectaNaDatabase from "./src/config/dbConnect.js";
 
     const porta = process.env.PORT || 3000;
 

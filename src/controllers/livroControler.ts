@@ -48,8 +48,7 @@ class LivroController {
             const filtro: Record<string, any> = {};
 
             if (autor) {
-                filtro.author = {
-                    $regex: String(autor),
+                filtro.author = {$regex: String(autor),
                     $options: "i"
                 };
             }
