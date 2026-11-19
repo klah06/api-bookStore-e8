@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 //CRIAR REGRAS PARA CRIAÇÃO (POST) E ATUALIZAÇÃO (PUT)
 export const criarLivroValidator = z.object({
@@ -11,12 +11,12 @@ export const criarLivroValidator = z.object({
     genero: z.string().min(3, "O gênero deve ter pelo menos 3 caracteres."),
     preco: z.number().positive("O preço deve ser maior que zero."),
     sku: z.string().min(3, "O SKU deve ter pelo menos 3 caracteres."),
-    cover: z.
-        .String()
+    cover: z
+        .string()
         .url("A capa deve ser uma URL válida")
-        .opcional()
+        .optional()
         .or(z.literal(""))
-        .transformal((val) => (val === "" ? undefined: val)),
+        .transform((val) => (val === "" ? undefined: val)),
 });
 
 export const atualizarLivroValidator = criarLivroValidator.partial();
