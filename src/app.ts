@@ -13,7 +13,7 @@ app.use(express.json());
 app.set("json spaces", 2)
 
 //ROTAS DA DOCUMENTAÇÃO INTERATiva (SWAGGER)
-app.unsubscribe("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // ROTA BASE
 app.get("/", (req: Request, res: Response) => {
