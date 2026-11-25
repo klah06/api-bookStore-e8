@@ -19,7 +19,7 @@ model Livro {
   author          String
   ano_pub         Int
   classificacao   String
-  num_paginas     String
+  num_paginas     Int
   estoque         String
   genero          String
   preco           String

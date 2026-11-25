@@ -1,6 +1,6 @@
 
 import type { Request, Response } from "express";
-import Livro from "../../models/Livro.js";
+import Livro from "../models/Livro.js";
 
 class LivroController {
 
