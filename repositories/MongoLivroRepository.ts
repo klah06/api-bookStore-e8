@@ -2,6 +2,7 @@ import Livro from "../src/models/Livro.js";
 import type { ILivroRepository, LivroDTO, FiltroLivroDTO } from "./ILivroRepository.js";
 
 export class MongoLivroRepository implements ILivroRepository{
+
     async listar() {
                 return await Livro.find({});
             }
@@ -22,6 +23,7 @@ export class MongoLivroRepository implements ILivroRepository{
             }
             return await Livro.find(filtro);
     }
+    
     async cadastrar(dados: LivroDTO) {
         return await Livro.create({
         title: dados.title,
@@ -31,7 +33,7 @@ export class MongoLivroRepository implements ILivroRepository{
         num_paginas: Number(dados.num_paginas),
         estoque: Number(dados.estoque),
         genero: dados.genero,
-        preco: Number(dados.preco),
+        preco: Number(dados.preco), 
         sku: dados.sku,
         cover: dados.cover
         });
@@ -44,6 +46,15 @@ export class MongoLivroRepository implements ILivroRepository{
             {new: true}
         );
     }
+
+    async atualizarParcial(id: string, dados: Partial<LivroDTO>){
+        return await Livro.findByIdAndUpdate(
+            id,
+            {$set: dados},
+            {new: true}
+        );
+    }
+
         async deletar (id: string) {
     const livroDeletado = await Livro.findByIdAndDelete(id);
     return Boolean(livroDeletado);
