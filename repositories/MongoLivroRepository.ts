@@ -44,7 +44,9 @@ export class MongoLivroRepository implements ILivroRepository{
             {new: true}
         );
     }
-        async deletar(id: string): Promise<boolean> {
-        }
+        async deletar (id: string) {
+    const livroDeletado = await Livro.findByIdAndDelete(id);
+    return Boolean(livroDeletado);
+}
 
 }
