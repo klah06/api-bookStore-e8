@@ -13,17 +13,17 @@ datasource db {
 }
 
 model Livro {
-  
-  id              String
-  title           String
-  author          String
-  ano_pub         Int
-  classificacao   String
-  num_paginas     Int
-  estoque         String
-  genero          String
-  preco           String
-  sku             String
-  cover           String @default("https://placehold.co/300x450?texto=No+Cover")
-  
+  id            String @id @default(uuid())
+  title         String
+  author        String
+  ano_pub       Int
+  classificacao String
+  num_paginas   Int
+  estoque       Int
+  genero        String
+  preco         Int
+  sku           String @unique
+  cover         String @default("https://placehold.co/300x450?texto=No+Cover")
 }
+  
+

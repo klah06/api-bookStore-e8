@@ -25,18 +25,18 @@ export class MongoLivroRepository implements ILivroRepository{
     }
     
     async cadastrar(dados: LivroDTO) {
-        return await Livro.create({
+    return await Livro.create({
         title: dados.title,
         author: dados.author,
-        ano_pub: Number(dados.ano_pub),
-        classificacao: Number(dados.classificacao),
-        num_paginas: Number(dados.num_paginas),
-        estoque: Number(dados.estoque),
+        ano_pub: dados.ano_pub,
+        classificacao: dados.classificacao,
+        num_paginas: dados.num_paginas,
+        estoque: dados.estoque,
         genero: dados.genero,
-        preco: Number(dados.preco), 
+        preco: dados.preco,
         sku: dados.sku,
         cover: dados.cover
-        });
+    });
 }
 
     async atualizar(id: string, dados: LivroDTO){
